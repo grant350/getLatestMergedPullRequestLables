@@ -9691,7 +9691,8 @@ const github = __nccwpck_require__(7031);
 const main = async () => {
 try {
   const payload = github.context.payload;
-  console.log('payload object: ',payload);
+  // console.log('payload object: ',payload);
+  console.log('github context object: ',github);
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
   const token = core.getInput('token', { required: true });
