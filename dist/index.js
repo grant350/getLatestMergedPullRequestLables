@@ -9691,10 +9691,9 @@ const github = __nccwpck_require__(7031);
 const main = async () => {
 try {
   const payload = github.context.payload;
-  console.log(payload);
   console.log('repo: ',payload.repository);
-  const owner = payload.repository.owner.name
-  const repo = payload.repository.name
+  const owner = payload.repository.owner.name;
+  const repo = payload.repository.name;
   const token = core.getInput('token', { required: true });
   const octokit = new github.getOctokit(token);
 
