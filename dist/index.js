@@ -9697,38 +9697,31 @@ try {
   const repo = payload.repository.name;
   const token = core.getInput('token', { required: true });
   const octokit = new github.getOctokit(token);
+  const SHA = github.context.sha;
 
-  octokit.rest.pulls.list({
+  const pulls = await octokit.pulls.list({
     owner,
     repo,
+    per_page: 10
   });
-  // await octokit.request('GET /repos/{owner}/{repo}/issues{?milestone,state,assignee,creator,mentioned,labels,sort,direction,since,per_page,page}', {
-  //   owner: 'OWNER',
-  //   repo: 'REPO'
-  // });
+  console.log('Pulls: ',pulls);
 
-  console.log(`Repo issue events: ${JSON.stringify(pubEvents)}`);
+  const ISSUES = await octokit.request(`GET /repos/${owner}/${repo}/issues`, {
+    owner,
+    repo
+  });
+  console.log('issues: ',ISSUES)
+  const PR = pulls.data.find(p => p.merge_commit_sha === sha);
+  console.log('PR: ',PR)
+
+
 } catch (error) {
   core.setFailed(error.message);
 }
 
 }
 main(); // run fn
-// https://api.github.com/repos/grant350/kuberform/issues/events [events]
-// object.issue.labels
 
-
-// https://api.github.com/repos/grant350/kuberform/pulls/2
-// object.labels //[]
-// -->   {
-//   "id": 4921402286,
-//   "node_id": "LA_kwDOIc0cy88AAAABJVajrg",
-//   "url": "https://api.github.com/repos/grant350/kuberform/labels/patch",
-//   "name": "patch",
-//   "color": "E55659",
-//   "default": false,
-//   "description": "versionControl patch"
-// }
 })();
 
 module.exports = __webpack_exports__;
