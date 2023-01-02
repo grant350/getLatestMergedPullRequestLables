@@ -19,6 +19,7 @@ try {
 }
 
 }
+main(); // run fn
 // https://api.github.com/repos/grant350/kuberform/issues/events [events]
 // object.issue.labels
 
