@@ -5,6 +5,11 @@ const github = require('@actions/github');
 const main = async () => {
 try {
   const payload = github.context.payload;
+
+  const event = core.getInput('event');
+
+  console.log('event',event);
+
   const owner = core.getInput('owner', { required: true });
 
   const repo = core.getInput('repo', { required: true });
@@ -13,9 +18,12 @@ try {
   const token = core.getInput('token', { required: true });
   const octokit = new github.getOctokit(token);
 
-  const pubEvents = await octokit.issue_events({repo});
-
-  console.log(`Issue events: ${JSON.stringify(pubEvents)}`);
+  // const pubEvents = await  octokit.rest.issues.listEvents({
+  //   owner,
+  //   repo,
+  //   issue_number,
+  // });
+  // console.log(`Issue events: ${JSON.stringify(pubEvents)}`);
 } catch (error) {
   core.setFailed(error.message);
 }
