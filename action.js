@@ -16,10 +16,10 @@ try {
     owner,
     repo,
     per_page: 10
-  }).data;
+  });
   console.log('PULLS', pulls);
-  const PR = pulls.filter(p => p.merge_commit_sha === SHA);
-  console.log('PR: ',PR)
+  // const PR = pulls.filter(p => p.merge_commit_sha === SHA);
+  // console.log('PR: ',PR)
 
 // return lables array
 } catch (error) {
