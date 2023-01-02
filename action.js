@@ -13,7 +13,7 @@ try {
   const octokit = new github.getOctokit(token);
   const SHA = github.context.sha;
 
-  const pulls = await octokit.pulls.list({
+  const pulls = await octokit.rest.pulls.list({
     owner,
     repo,
     per_page: 10
