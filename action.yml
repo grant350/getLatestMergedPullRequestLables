@@ -1,13 +1,5 @@
 name: 'get_latest_merged_pull_request_labels'
-description: 'Greet someone and record the time'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  time:
-    description: 'The time we greeted you'
+description: 'return labels from current event'
 runs:
   using: 'node16'
   main: 'dist/index.js'
