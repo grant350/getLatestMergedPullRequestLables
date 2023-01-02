@@ -6,7 +6,6 @@ const main = async () => {
 try {
   const payload = github.context.payload;
   const event = core.getInput('event');
-  console.log('username',event.pusher.name);
   const owner = event.repository.owner.name
   const repo = event.repository.name
   const token = core.getInput('token', { required: true });
