@@ -9698,15 +9698,15 @@ try {
   const SHA = github.context.sha;
 
 
-  var pullRequest = await octokit.rest.pulls.list({
+  var pullRequests = await octokit.rest.pulls.list({
     owner,
     repo,
     per_page: 10
   });
-  pullRequest = pullRequest.data
-  console.log('PULLS', pullRequest);
-  // const PR = pulls.filter(p => p.merge_commit_sha === SHA);
-  // console.log('PR: ',PR)
+  pullRequests = pullRequests.data
+  console.log('PULLS', pullRequests);
+  const PR = pullRequests.find(p => p.merge_commit_sha === SHA);
+  console.log('PR: ',PR)
 
 // return lables array
 } catch (error) {
