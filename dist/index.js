@@ -9692,6 +9692,8 @@ const main = async () => {
 try {
   const payload = github.context.payload;
   console.log(payload);
+  console.log('repo: ',payload.repository);
+
   // const event = core.getInput('event');
   // const owner = event.repository.owner.name
   // const repo = event.repository.name
