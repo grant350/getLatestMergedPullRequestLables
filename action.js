@@ -12,12 +12,13 @@ try {
   const SHA = github.context.sha;
 
 
-  const pulls = await octokit.rest.pulls.list({
+  var pullRequest = await octokit.rest.pulls.list({
     owner,
     repo,
     per_page: 10
   });
-  console.log('PULLS', pulls);
+  pullRequest = pullRequest.data
+  console.log('PULLS', pullRequest);
   // const PR = pulls.filter(p => p.merge_commit_sha === SHA);
   // console.log('PR: ',PR)
 
