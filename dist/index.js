@@ -9691,6 +9691,7 @@ const github = __nccwpck_require__(7031);
 const main = async () => {
 try {
   const payload = github.context.payload;
+  console.log('head ',payload.head);
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
   const token = core.getInput('token', { required: true });
@@ -9705,6 +9706,7 @@ try {
   });
   pullRequests = pullRequests.data
   console.log('PULLS', pullRequests);
+  console.log('SHA',SHA);
   const PR = pullRequests.find(p => p.merge_commit_sha === SHA);
   console.log('PR: ',PR)
 
