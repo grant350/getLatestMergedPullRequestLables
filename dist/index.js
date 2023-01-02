@@ -9691,25 +9691,18 @@ const github = __nccwpck_require__(7031);
 const main = async () => {
 try {
   const payload = github.context.payload;
-
   const event = core.getInput('event');
-
-  console.log('event',event);
-
-  const owner = core.getInput('owner', { required: true });
-
-  const repo = core.getInput('repo', { required: true });
-
-  // const pr_number = core.getInput('pr_number', { required: true });
+  console.log('username',event.pusher.name);
+  const owner = event.repository.owner.name
+  const repo = event.repository.name
   const token = core.getInput('token', { required: true });
   const octokit = new github.getOctokit(token);
 
-  // const pubEvents = await  octokit.rest.issues.listEvents({
-  //   owner,
-  //   repo,
-  //   issue_number,
-  // });
-  // console.log(`Issue events: ${JSON.stringify(pubEvents)}`);
+  const pubEvents = await  octokit.rest.issues.listEvents({
+    owner,
+    repo
+  });
+  console.log(`Repo issue events: ${JSON.stringify(pubEvents)}`);
 } catch (error) {
   core.setFailed(error.message);
 }
