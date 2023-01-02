@@ -11,15 +11,14 @@ try {
   const octokit = new github.getOctokit(token);
   const SHA = github.context.sha;
 
-  console.log("pulls rest object: ", octokit.rest.pulls)
 
   const pulls = await octokit.rest.pulls.list({
     owner,
     repo,
     per_page: 10
-  });
-
-  const PR = pulls.data.find(p => p.merge_commit_sha === SHA);
+  }).data;
+  console.log('PULLS', pulls);
+  const PR = pulls.filter(p => p.merge_commit_sha === SHA);
   console.log('PR: ',PR)
 
 // return lables array
