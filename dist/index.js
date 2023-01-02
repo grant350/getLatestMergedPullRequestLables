@@ -9692,19 +9692,22 @@ const main = async () => {
 try {
   const payload = github.context.payload;
   // console.log('payload object: ',payload);
-  console.log('github context object: ',github);
+  // console.log('github context object: ',github);
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
   const token = core.getInput('token', { required: true });
   const octokit = new github.getOctokit(token);
   const SHA = github.context.sha;
 
-  const pulls = await octokit.pulls.list({
+  console.log("pulls rest object: ", octokit.rest.pulls)
+
+  const pulls = await octokit.rest.pulls.list({
     owner,
     repo,
     per_page: 10
   });
-  console.log('Pulls: ',pulls);
+
+  console.log('pulls: ',pulls);
 
   const ISSUES = await octokit.request(`GET /repos/${owner}/${repo}/issues`, {
     owner,
