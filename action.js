@@ -5,7 +5,7 @@ const github = require('@actions/github');
 const main = async () => {
 try {
   const payload = github.context.payload;
-  console.log('head ',payload.head);
+  console.log('payload ',payload);
   const owner = payload.repository.owner.name;
   const repo = payload.repository.name;
   const token = core.getInput('token', { required: true });
