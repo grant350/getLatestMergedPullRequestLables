@@ -11,11 +11,9 @@ try {
   const token = core.getInput('token', { required: true });
   const octokit = new github.getOctokit(token);
 
-  const pubEvents = await octokit.rest.activity.listPublicEventsForUser({
-    username: payload.pusher.name,
-  })[0];
+  const pubEvents = await octokit.issue_events({repo});
 
-  console.log(`The event payload: ${JSON.stringify(pubEvents)}`);
+  console.log(`Issue events: ${JSON.stringify(pubEvents)}`);
 } catch (error) {
   core.setFailed(error.message);
 }
