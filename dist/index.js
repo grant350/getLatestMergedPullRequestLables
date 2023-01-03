@@ -9700,11 +9700,10 @@ const main = async () => {
     var pullRequests = await octokit.rest.pulls.list({
       owner,
       repo,
-      per_page: 10
+      per_page: 100
     });
-    pullRequests = pullRequests.data
     console.log('SHA', SHA);
-    const PR = pullRequests.find(pr => {console.log(pr.merge_commit_sha); return pr.merge_commit_sha === SHA});
+    const PR = pullRequests.data.find(pr => {console.log(pr.merge_commit_sha); return pr.merge_commit_sha === SHA});
     console.log('PR: ', PR);
     if (PR === undefined || PR === null) {
       throw new Error("There is no labels or there is no merge commit found. Is this a Pull-Request event?");
