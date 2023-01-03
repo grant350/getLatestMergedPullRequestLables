@@ -18,7 +18,7 @@ const main = async () => {
       per_page: 100
     });
 
-    const PR = pullRequests.data.find((pr) => {return pr.merge_commit_sha === SHA});
+    const PR = pullRequests.data.find((pr) => {return pr.merge_commit_sha === SHA || pr.head.sha === SHA});
     if (PR){
       if (PR.labels){
         core.setOutput("labels", PR.labels.map((currentValue)=> currentValue.name));
