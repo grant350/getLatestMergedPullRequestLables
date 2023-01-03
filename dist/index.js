@@ -9703,6 +9703,7 @@ const main = async () => {
       per_page: 100
     });
     console.log('SHA', SHA);
+    console.log(pullRequests.data);
     const PR = pullRequests.data.find(pr => {console.log(pr.merge_commit_sha); return pr.merge_commit_sha === SHA});
     console.log('PR: ', PR);
     if (PR === undefined || PR === null) {
