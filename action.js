@@ -6,7 +6,9 @@ const main = async () => {
     const payload = github.context.payload;
     const owner = payload.repository.owner.name;
     const repo = payload.repository.name;
-    const token = core.getInput('token', { required: true });
+    const token = core.getInput('token', {
+      required: true
+    });
     const octokit = new github.getOctokit(token);
     const SHA = github.context.sha;
 
@@ -19,7 +21,7 @@ const main = async () => {
         state: 'closed',
         per_page: 100
       });
-      const PR = closedPullRequests.data.find((pr) => { return pr.merge_commit_sha === SHA });
+      const PR = closedPullRequests.data.find((pr) => pr.merge_commit_sha === SHA);
       if (PR) {
         if (PR.labels) {
           core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
@@ -30,25 +32,24 @@ const main = async () => {
     }
 
     try {
-    const openPullRequests = await octokit.rest.pulls.list({
-      owner,
-      repo,
-      sort: 'updated',
-      direction: 'desc',
-      state: 'open',
-      per_page: 100
-    });
+      const openPullRequests = await octokit.rest.pulls.list({
+        owner,
+        repo,
+        sort: 'long-running',
+        direction: 'desc',
+        state: 'open',
+        per_page: 100
+      });
 
-    const PR = openPullRequests.data.find((pr) => { return  pr.head.sha === SHA });
-    if (PR) {
-      if (PR.labels) {
-        core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
+      const PR = openPullRequests.data.find((pr) => pr.head.sha === SHA);
+      if (PR) {
+        if (PR.labels) {
+          core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
+        }
       }
+    } catch {
+      console.log("No open PR's")
     }
-  } catch {
-    console.log("No open PR's")
-
-  }
 
     return;
   } catch (error) {
