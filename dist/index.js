@@ -9722,11 +9722,10 @@ const main = async () => {
         owner,
         repo,
         sort: 'long-running',
-        direction: 'desc',
         state: 'open',
         per_page: 100
       });
-
+      console.log('opened prs: ',openPullRequests);
       const PR = openPullRequests.data.find((pr) => pr.head.sha === SHA);
       if (PR) {
         if (PR.labels) {
