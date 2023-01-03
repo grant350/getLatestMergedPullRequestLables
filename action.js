@@ -18,12 +18,13 @@ const main = async () => {
     });
     pullRequests = pullRequests.data
     console.log('SHA', SHA);
-    const PR = pullRequests.find(p => p.merge_commit_sha === SHA);
+    const PR = pullRequests.find(pr => {console.log(pr.merge_commit_sha); return pr.merge_commit_sha === SHA});
     console.log('PR: ', PR);
-    core.setOutput("labels", PR.labels);
     if (PR === undefined || PR === null) {
       throw new Error("There is no labels or there is no merge commit found. Is this a Pull-Request event?");
     }
+    core.setOutput("labels", PR.labels);
+
   } catch (error) {
     core.setFailed(error.message);
   }
