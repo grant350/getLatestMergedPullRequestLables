@@ -1,5 +1,8 @@
 name: 'get_latest_merged_pull_request_labels'
-description: 'return labels from current event'
+description: 'return labels from PR'
+outputs:
+  labels: # id of output
+    description: 'The labels found on PR'
 runs:
   using: 'node16'
   main: 'dist/index.js'
