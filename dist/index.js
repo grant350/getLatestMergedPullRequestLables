@@ -9716,6 +9716,8 @@ const main = async () => {
       console.log("No closed PR's")
     }
 
+    console.log('repo',repo);
+    console.log('owner',owner);
     const openPullRequests = await octokit.rest.pulls.list({
       owner,
       repo,
