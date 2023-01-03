@@ -9721,10 +9721,10 @@ const main = async () => {
       const openPullRequests = await octokit.rest.pulls.list({
         owner,
         repo,
-        sort: 'long-running',
-        state: 'open',
+        state: 'all',
         per_page: 100
       });
+
       console.log('opened prs: ',openPullRequests);
       const PR = openPullRequests.data.find((pr) => pr.head.sha === SHA);
       if (PR) {
