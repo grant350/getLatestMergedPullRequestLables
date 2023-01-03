@@ -14,7 +14,11 @@ const main = async () => {
 
     var pullRequests = await octokit.rest.pulls.list({
       owner,
-      repo
+      repo,
+      sort: 'updated',
+      direction: 'desc',
+      state: 'closed',
+      per_page: 100
     });
     console.log('SHA', SHA);
     console.log('prd',pullRequests.data);
