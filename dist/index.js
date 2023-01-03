@@ -9692,13 +9692,10 @@ const main = async () => {
     const payload = github.context.payload;
     const owner = payload.repository.owner.name;
     const repo = payload.repository.name;
-    const token = core.getInput('token', {
-      required: true
-    });
+    const token = core.getInput('token', {required: true});
     const octokit = new github.getOctokit(token);
     const SHA = github.context.sha;
-
-    var pullRequests = await octokit.rest.pulls.list({
+    const pullRequests = await octokit.rest.pulls.list({
       owner,
       repo,
       sort: 'updated',
@@ -9706,15 +9703,14 @@ const main = async () => {
       state: 'closed',
       per_page: 100
     });
-    console.log('SHA', SHA);
-    console.log('prd',pullRequests.data);
-    const PR = pullRequests.data.find(pr => {console.log(pr.merge_commit_sha); return pr.merge_commit_sha === SHA});
-    console.log('PR: ', PR);
-    // if (PR === undefined || PR === null) {
-    //   throw new Error("There is no labels or there is no merge commit found. Is this a Pull-Request event?");
-    // }
-    core.setOutput("labels", PR.labels);
 
+    const PR = pullRequests.data.find((pr) => {return pr.merge_commit_sha === SHA});
+    if (PR){
+      if (PR.labels){
+        core.setOutput("labels", PR.labels.map((currentValue)=> currentValue.name));
+      }
+    }
+    return;
   } catch (error) {
     core.setFailed(error.message);
   }
