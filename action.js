@@ -11,13 +11,13 @@ const main = async () => {
     });
     const octokit = new github.getOctokit(token);
     const SHA = github.context.sha;
+
     var pullRequests = await octokit.rest.pulls.list({
       owner,
-      repo,
-      per_page: 100
+      repo
     });
     console.log('SHA', SHA);
-    console.log(pullRequests.data);
+    console.log('prd',pullRequests.data);
     const PR = pullRequests.data.find(pr => {console.log(pr.merge_commit_sha); return pr.merge_commit_sha === SHA});
     console.log('PR: ', PR);
     if (PR === undefined || PR === null) {
