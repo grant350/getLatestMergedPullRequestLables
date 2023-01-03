@@ -9688,7 +9688,6 @@ const core = __nccwpck_require__(2375);
 const github = __nccwpck_require__(7031);
 
 const main = async () => {
-  try {
     const payload = github.context.payload;
     const owner = payload.repository.owner.name;
     const repo = payload.repository.name;
@@ -9717,6 +9716,14 @@ const main = async () => {
       console.log("No closed PR's")
     }
 
+    const openPullRequests = await octokit.rest.pulls.list({
+      owner,
+      repo,
+      state: 'all'
+    });
+
+    console.log('opened prs: ',openPullRequests);
+
     try {
       const openPullRequests = await octokit.rest.pulls.list({
         owner,
@@ -9734,11 +9741,6 @@ const main = async () => {
     } catch {
       console.log("No open PR's")
     }
-
-    return;
-  } catch (error) {
-    core.setFailed(error.message);
-  }
 
 }
 main(); // run fn
