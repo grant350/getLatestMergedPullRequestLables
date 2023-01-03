@@ -35,8 +35,7 @@ const main = async () => {
       const openPullRequests = await octokit.rest.pulls.list({
         owner,
         repo,
-        state: 'all',
-        per_page: 100
+        state: 'all'
       });
 
       console.log('opened prs: ',openPullRequests);
