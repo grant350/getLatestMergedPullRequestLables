@@ -9706,9 +9706,9 @@ const main = async () => {
     console.log('prd',pullRequests.data);
     const PR = pullRequests.data.find(pr => {console.log(pr.merge_commit_sha); return pr.merge_commit_sha === SHA});
     console.log('PR: ', PR);
-    if (PR === undefined || PR === null) {
-      throw new Error("There is no labels or there is no merge commit found. Is this a Pull-Request event?");
-    }
+    // if (PR === undefined || PR === null) {
+    //   throw new Error("There is no labels or there is no merge commit found. Is this a Pull-Request event?");
+    // }
     core.setOutput("labels", PR.labels);
 
   } catch (error) {
