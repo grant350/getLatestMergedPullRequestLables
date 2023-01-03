@@ -14,7 +14,7 @@ const main = async () => {
       repo,
       sort: 'updated',
       direction: 'desc',
-      state: 'closed',
+      // state: 'closed',
       per_page: 100
     });
 
