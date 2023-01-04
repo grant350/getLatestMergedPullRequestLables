@@ -9710,10 +9710,13 @@ const main = async () => {
       if (PR) {
         if (PR.labels) {
           core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
+          return;
         }
+        throw new Error("No Labels found")
       }
-    } catch {
-      throw new Error("NO PR's found")
+      throw new Error("No PR's found")
+    } catch (e) {
+      core.setfailed(e)
     }
 
 }
