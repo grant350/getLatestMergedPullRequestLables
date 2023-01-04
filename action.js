@@ -21,7 +21,7 @@ const main = async () => {
       const PR = closedPullRequests.data.find((pr) => pr.merge_commit_sha === SHA || pr.head.sha === SHA );
      console.log('sha',SHA,'pr', PR);
       if (PR.labels) {
-        core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
+        core.setOutput("labelNames", PR.labels.map((currentValue) => currentValue.name));
         return;
     }
     core.setFailed("No PR's or labels found")
