@@ -9696,9 +9696,7 @@ const main = async () => {
     });
     const octokit = new github.getOctokit(token);
     const SHA = github.context.sha;
-
-    try {
-      const closedPullRequests = await octokit.rest.pulls.list({
+    const closedPullRequests = await octokit.rest.pulls.list({
         owner,
         repo,
         sort: 'updated',
@@ -9706,18 +9704,12 @@ const main = async () => {
         state: 'all',
         per_page: 100
       });
-      const PR = closedPullRequests.data.find((pr) => pr.merge_commit_sha === SHA);
-
-        if (PR.labels) {
-          core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
-          return;
-        }
-      throw new Error("No PR's or labels found");
-    } catch (e) {
-      core.error(e);
-      core.setfailed(e.message);
-      console.log(e);
+      const PR = closedPullRequests.data.find((pr) => pr.merge_commit_sha === SHA || pr.head.sha === SHA );
+      if (PR.labels) {
+        core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
+        return;
     }
+    throw new Error("No PR's or labels found");
 
 }
 main(); // run fn
