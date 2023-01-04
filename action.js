@@ -4,7 +4,6 @@ const github = require('@actions/github');
 const main = async () => {
     const payload = github.context.payload;
     const owner = payload.repository.owner.login;
-    // console.log('owner',payload.repository.owner);
     const repo = payload.repository.name;
     const token = core.getInput('token', {
       required: true
@@ -18,7 +17,7 @@ const main = async () => {
         repo,
         sort: 'updated',
         direction: 'desc',
-        state: 'closed',
+        state: 'all',
         per_page: 100
       });
       const PR = closedPullRequests.data.find((pr) => pr.merge_commit_sha === SHA);
@@ -28,35 +27,7 @@ const main = async () => {
         }
       }
     } catch {
-      console.log("No closed PR's")
-    }
-
-    console.log('repo',repo);
-    console.log('owner',owner);
-    const openPullRequests = await octokit.rest.pulls.list({
-      owner,
-      repo,
-      state: 'all'
-    });
-
-    console.log('opened prs: ',openPullRequests);
-
-    try {
-      const openPullRequests = await octokit.rest.pulls.list({
-        owner,
-        repo,
-        state: 'all'
-      });
-
-      console.log('opened prs: ',openPullRequests);
-      const PR = openPullRequests.data.find((pr) => pr.head.sha === SHA);
-      if (PR) {
-        if (PR.labels) {
-          core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
-        }
-      }
-    } catch {
-      console.log("No open PR's")
+      throw new Error("NO PR's found")
     }
 
 }
