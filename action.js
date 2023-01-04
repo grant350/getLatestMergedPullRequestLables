@@ -3,7 +3,8 @@ const github = require('@actions/github');
 
 const main = async () => {
     const payload = github.context.payload;
-    const owner = payload.repository.owner.name;
+    const owner = github.context.repository_owner;
+    console.log('context',github.context);
     const repo = payload.repository.name;
     const token = core.getInput('token', {
       required: true
