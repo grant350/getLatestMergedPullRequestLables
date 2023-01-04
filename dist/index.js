@@ -9705,12 +9705,12 @@ const main = async () => {
         per_page: 100
       });
       const PR = closedPullRequests.data.find((pr) => pr.merge_commit_sha === SHA || pr.head.sha === SHA );
+     console.log('sha',SHA,'pr', PR);
       if (PR.labels) {
         core.setOutput("labels", PR.labels.map((currentValue) => currentValue.name));
         return;
     }
-    throw new Error("No PR's or labels found");
-
+    core.setFailed("No PR's or labels found")
 }
 main(); // run fn
 })();
